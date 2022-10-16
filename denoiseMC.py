@@ -1,8 +1,13 @@
 def denoiseMC(clip, denoise_fn, radius: int = 2, search: int = 3, blksize: int = 16):
     from vapoursynth import core
-
     mv = core.mv
     std = core.std
+
+    if clip is None:
+        raise ValueError('clip is required')
+
+    if denoise_fn is None:
+        raise ValueError('denoise_fn is required')
 
     if radius < 1:
         raise ValueError('radius must be greater than 0')
