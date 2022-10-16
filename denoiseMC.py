@@ -21,8 +21,7 @@ def denoiseMC(clip, denoise_fn, radius: int = 2, search: int = 3, blksize: int =
         vecs = map(lambda v: mv.Recalculate(sup, v, blksize=blksize/2, overlap=blksize/4, search=search, truemotion=True), vecs)
 
     mcomped = list(map(lambda r: mv.Flow(clip, sup, r), vecs))
-
-    interleaved = std.Interleave(clips=mcomped[:radius] + [clip] + mcomped[radius+1:])
+    interleaved = std.Interleave(clips=mcomped[:radius] + [clip] + mcomped[radius:])
 
     # denoise_fn must return a clip
     denoised = denoise_fn(interleaved)
